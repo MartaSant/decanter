@@ -1,0 +1,273 @@
+================================================================================
+DOCUMENTAZIONE: LOGICA DELLE BARRE DINAMICHE NELLA HOME
+================================================================================
+
+Data: 2024
+Autore: Documentazione tecnica
+
+================================================================================
+1. STRUTTURA HTML
+================================================================================
+
+Le barre sono composte da due elementi HTML posizionati prima della chiusura 
+del tag </body>:
+
+    <!-- Rettangolo fondo pagina -->
+    <div class="bottom-rectangle">
+        <div class="bottom-rectangle-left"></div>
+    </div>
+    <div class="bottom-rectangle-extended"></div>
+
+COMPONENTI:
+- .bottom-rectangle: Barra principale (20px di altezza)
+  - .bottom-rectangle-left: Contenitore interno con sfondo bianco e animazione
+- .bottom-rectangle-extended: Barra estesa (1000px di altezza, colore #4a0215)
+
+
+================================================================================
+2. STYLING CSS
+================================================================================
+
+2.1 BARRA PRINCIPALE (.bottom-rectangle)
+-----------------------------------------
+- position: fixed (rimane fissa durante lo scroll)
+- bottom: 0 (posizione iniziale in fondo alla pagina)
+- width: 100% (larghezza completa del viewport)
+- height: 20px (altezza fissa)
+- z-index: 1 (sopra la barra estesa, sotto altri elementi)
+- pointer-events: none (non interferisce con i click)
+- transition: bottom 0.1s ease-out (transizione fluida del movimento)
+
+2.2 BARRA ESTESA (.bottom-rectangle-extended)
+----------------------------------------------
+- position: fixed
+- bottom: -1000px (posizione iniziale fuori dal viewport)
+- width: 100%
+- height: 1000px
+- background: #4a0215 (colore bordeaux scuro)
+- z-index: 1
+- pointer-events: none
+
+2.3 CONTENITORE INTERNO (.bottom-rectangle-left)
+------------------------------------------------
+- width: 100%
+- height: 100% (20px, ereditato dal parent)
+- background: #ffffff (bianco, sfondo visibile)
+- position: relative (per i pseudo-elementi)
+- overflow: hidden (nasconde le parti dell'onda fuori dal contenitore)
+
+2.4 PSEUDO-ELEMENTI (::before e ::after)
+-----------------------------------------
+Entrambi creano l'effetto onda rossa:
+- position: absolute
+- width: 100%, height: 100%
+- background: #4a0215 (colore bordeaux)
+- clip-path: polygon(0% 50%, 100% 50%, 100% 100%, 0% 100%)
+  (stato iniziale: rettangolo uniforme al 50% dell'altezza)
+
+::after ha anche:
+- opacity: 0.7 (per creare profondità con due livelli)
+
+2.5 CLASSE .scrolling
+---------------------
+Quando viene aggiunta a .bottom-rectangle-left:
+- ::before anima con "wave" (2.5s, infinite)
+- ::after anima con "waveSecondary" (2.5s, infinite, delay 0.3s)
+
+
+================================================================================
+3. LOGICA JAVASCRIPT - MOVIMENTO DELLE BARRE
+================================================================================
+
+3.1 FUNZIONE updateRectanglePosition()
+---------------------------------------
+Calcola la posizione delle barre in base allo scroll:
+
+VARIABILI:
+- scrollTop: posizione attuale dello scroll (0 = in alto)
+- documentHeight: altezza totale del documento
+- viewportHeight: altezza visibile del viewport
+- maxScroll: scroll massimo possibile (documentHeight - viewportHeight)
+
+CALCOLO POSIZIONE:
+1. Se maxScroll <= 0 (nessuno scroll possibile):
+   - bottomPosition = 0 (barra in fondo)
+
+2. Altrimenti:
+   - scrollProgress = scrollTop / maxScroll
+     (0 quando in alto, 1 quando in fondo)
+   - bottomPosition = (viewportHeight - 20) * scrollProgress
+     (0 quando in alto, viewportHeight - 20 quando in fondo)
+
+EFFETTO:
+- Quando scroll = 0 (in alto): barra in fondo (bottom: 0)
+- Quando scroll = max (in fondo): barra in alto (bottom: viewportHeight - 20px)
+- La barra si muove linearmente tra queste due posizioni
+
+3.2 POSIZIONAMENTO BARRA ESTESA
+--------------------------------
+- extendedBar.style.bottom = (bottomPosition - 1000) + 'px'
+- La barra estesa è sempre posizionata 1000px sotto la barra principale
+- Quando la barra principale è in fondo (0), l'estesa è a -1000px (fuori schermo)
+- Quando la barra principale sale, anche l'estesa sale mantenendo la distanza
+
+3.3 EVENT LISTENERS
+-------------------
+- 'load': aggiorna posizione al caricamento
+- 'scroll': aggiorna posizione durante lo scroll
+- 'resize': aggiorna posizione al ridimensionamento finestra
+- setTimeout(updateRectanglePosition, 100): chiamata iniziale con delay
+
+
+================================================================================
+4. LOGICA JAVASCRIPT - ANIMAZIONE ONDULATORIA
+================================================================================
+
+4.1 STATO DELL'ANIMAZIONE
+-------------------------
+Variabili di stato:
+- scrollTimeout: timeout per rilevare quando lo scroll si ferma
+- stopTimeout: timeout per completare il ciclo animazione
+- isScrolling: flag che indica se l'utente sta scrollando
+- animationStartTime: timestamp quando l'animazione inizia
+- animationDuration: 2500ms (durata di un ciclo animazione)
+
+4.2 FUNZIONE handleScroll()
+----------------------------
+Viene chiamata ad ogni evento scroll:
+
+1. Se non sta già scrollando:
+   - Imposta isScrolling = true
+   - Registra animationStartTime = Date.now()
+   - Aggiunge classe 'scrolling' alla barra rossa (avvia animazione)
+
+2. Cancella eventuali timeout precedenti
+
+3. Imposta un nuovo timeout (150ms):
+   - Quando scade, imposta isScrolling = false
+   - Calcola tempo rimanente per completare il ciclo corrente:
+     * elapsed = Date.now() - animationStartTime
+     * remaining = animationDuration - (elapsed % animationDuration)
+   - Imposta un secondo timeout (remaining):
+     * Quando scade, rimuove classe 'scrolling' (ferma animazione)
+     * Solo se isScrolling è ancora false (utente non ha ripreso a scrollare)
+
+EFFETTO:
+- L'animazione parte quando inizia lo scroll
+- L'animazione continua anche quando lo scroll si ferma
+- L'animazione si ferma solo dopo aver completato il ciclo corrente
+- Se l'utente riprende a scrollare durante il completamento, l'animazione continua
+
+4.3 EVENT LISTENER
+------------------
+- 'scroll': chiama handleScroll con { passive: true } (ottimizzazione performance)
+
+
+================================================================================
+5. ANIMAZIONI CSS KEYFRAMES
+================================================================================
+
+5.1 ANIMAZIONE "wave" (::before)
+---------------------------------
+Durata: 2.5s, ease-in-out, infinite
+
+Punti chiave:
+- 0% e 100%: Onda piatta al 50% (stato iniziale)
+- 12.5% e 87.5%: Onda moderata (40%-60%)
+- 25% e 75%: Onda massima (30%-70%)
+- 37.5% e 62.5%: Onda moderata (40%-60%)
+- 50%: Onda piatta al 50% (punto centrale)
+
+Pattern creste:
+- Gli estremi (0% e 100%) rimangono sempre al 50%
+- Le creste si alternano: una su (30-40%), una giù (60-70%)
+- 12 punti di controllo lungo la larghezza (ogni 8.33%)
+
+5.2 ANIMAZIONE "waveSecondary" (::after)
+-----------------------------------------
+Durata: 2.5s, ease-in-out, infinite, delay 0.3s
+
+Stessa struttura di "wave" ma con:
+- Pattern leggermente diverso per creare profondità
+- Delay di 0.3s per movimento asincrono
+- Opacità 0.7 per effetto di profondità
+
+5.3 CLIP-PATH
+-------------
+Usa polygon() per creare la forma dell'onda:
+- Punti lungo la larghezza (0%, 8.33%, 16.66%, ..., 100%)
+- Ogni punto ha un'altezza Y che varia durante l'animazione
+- Gli estremi (0% e 100%) rimangono sempre al 50%
+- Le creste oscillano tra 30% e 70% dell'altezza
+
+
+================================================================================
+6. FLUSSO COMPLETO
+================================================================================
+
+1. CARICAMENTO PAGINA:
+   - Le barre sono posizionate in fondo (bottom: 0 e bottom: -1000px)
+   - La barra rossa è in stasi (50% altezza, uniforme)
+
+2. UTENTE INIZIA A SCROLLARE:
+   - handleScroll() aggiunge classe 'scrolling'
+   - L'animazione ondulatoria inizia
+   - updateRectanglePosition() calcola nuova posizione
+   - Le barre si muovono verso l'alto
+
+3. DURANTE LO SCROLL:
+   - Ad ogni evento scroll, le posizioni vengono ricalcolate
+   - L'animazione ondulatoria continua
+   - Le barre seguono la posizione dello scroll
+
+4. UTENTE FERMA LO SCROLL:
+   - Dopo 150ms di inattività, isScrolling = false
+   - Viene calcolato il tempo rimanente per completare il ciclo
+   - L'animazione continua fino al completamento del ciclo
+   - La classe 'scrolling' viene rimossa
+   - La barra rossa torna allo stato iniziale (50%, uniforme)
+
+5. UTENTE RICOMINCIA A SCROLLARE:
+   - Se l'animazione è ancora in corso, continua
+   - Se l'animazione è ferma, riparte da capo
+
+
+================================================================================
+7. CARATTERISTICHE TECNICHE
+================================================================================
+
+PERFORMANCE:
+- Usa requestAnimationFrame implicitamente (transition CSS)
+- Event listener con { passive: true } per migliori performance
+- pointer-events: none per evitare interferenze
+
+RESPONSIVE:
+- Le barre si adattano automaticamente al viewport
+- Il calcolo della posizione tiene conto del resize della finestra
+
+ACCESSIBILITÀ:
+- pointer-events: none (non interferisce con l'interazione)
+- z-index appropriato (non copre elementi importanti)
+
+COMPATIBILITÀ:
+- Usa proprietà CSS standard (clip-path supportato da browser moderni)
+- Fallback: se clip-path non supportato, la barra appare come rettangolo
+
+
+================================================================================
+8. NOTE IMPLEMENTATIVE
+================================================================================
+
+- Le barre sono posizionate FUORI dal contenuto principale (prima di </body>)
+- Il JavaScript è in una IIFE (Immediately Invoked Function Expression) per 
+  evitare conflitti con altre variabili
+- La logica è separata in due funzioni distinte per chiarezza
+- Il timeout di 150ms per rilevare lo stop dello scroll è un compromesso tra
+  responsività e stabilità
+- L'animazione completa il ciclo per evitare interruzioni brusche
+
+
+================================================================================
+FINE DOCUMENTAZIONE
+================================================================================
+
