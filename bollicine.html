@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Bollicine · Decanter Wine & More</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Champagne, Prosecco e spumanti a Decanter Wine & More. Perfetti per ogni occasione.">
+    <meta name="description" content="Bollicine Decanter Wine & More: Champagne, Prosecco e spumanti per ogni occasione.">
     
     <!-- Meta tag iOS (PWA/Home Screen) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,7 +31,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://decanterwinemore.github.io/bollicine.html">
     <meta property="og:title" content="Bollicine · Decanter Wine & More">
-    <meta property="og:description" content="Champagne, Prosecco e spumanti a Decanter Wine & More. Perfetti per ogni occasione.">
+    <meta property="og:description" content="Bollicine Decanter Wine & More: Champagne, Prosecco e spumanti per ogni occasione.">
     <meta property="og:image" content="https://decanterwinemore.github.io/logo.png">
     <meta property="og:locale" content="it_IT">
     <meta property="og:site_name" content="Decanter Wine & More">
@@ -40,7 +40,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://decanterwinemore.github.io/bollicine.html">
     <meta name="twitter:title" content="Bollicine · Decanter Wine & More">
-    <meta name="twitter:description" content="Champagne, Prosecco e spumanti a Decanter Wine & More. Perfetti per ogni occasione.">
+    <meta name="twitter:description" content="Bollicine Decanter Wine & More: Champagne, Prosecco e spumanti per ogni occasione.">
     <meta name="twitter:image" content="https://decanterwinemore.github.io/logo.png">
     
     <!-- Meta tag per disabilitare la cache del browser -->
@@ -52,10 +52,48 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" as="style">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome per le icone social -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="menu-body">
+    <!-- Sfondo SVG animato del vino -->
+    <div class="wine-background">
+        <svg viewBox="0 0 220 300" role="img" aria-label="Vino rosso 2D con cima ondulata (trasparente)" class="wine-svg">
+            <defs>
+                <linearGradient id="wineGrad-bollicine" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#7b1020"/>
+                    <stop offset=".55" stop-color="#4c0612"/>
+                    <stop offset="1" stop-color="#2a0208"/>
+                </linearGradient>
+                <clipPath id="wineWaveClip-bollicine">
+                    <path>
+                        <animate attributeName="d" dur="2.6s" repeatCount="indefinite"
+                            values="
+                            M64 246 L64 90
+                            C82 84, 100 96, 110 90
+                            C120 84, 138 96, 156 90
+                            L156 246 Z;
+                            M64 246 L64 90
+                            C82 96, 100 84, 110 90
+                            C120 96, 138 84, 156 90
+                            L156 246 Z;
+                            M64 246 L64 90
+                            C82 84, 100 96, 110 90
+                            C120 84, 138 96, 156 90
+                            L156 246 Z
+                            " />
+                    </path>
+                </clipPath>
+            </defs>
+            <g clip-path="url(#wineWaveClip-bollicine)">
+                <rect x="64" y="84" width="92" height="162" fill="url(#wineGrad-bollicine)"/>
+                <path d="M78 98 C88 128, 80 190, 96 236"
+                    fill="none" stroke="rgba(255,255,255,.18)" stroke-width="8" stroke-linecap="round"/>
+                <path d="M148 96 C138 140, 146 196, 140 236"
+                    fill="none" stroke="rgba(0,0,0,.22)" stroke-width="10" stroke-linecap="round"/>
+            </g>
+        </svg>
+    </div>
     <div class="menu-page">
         <header class="menu-header">
             <div class="menu-header-left">
@@ -63,73 +101,96 @@
                     <img src="logo.png" alt="Decanter Wine & More">
                 </div>
                 <div class="menu-title-block">
-                    <span class="menu-eyebrow">Decanter Wine & More</span>
+                    <span class="menu-eyebrow">Decanter Wine &amp; More</span>
                     <h1 class="menu-title">Bollicine</h1>
                 </div>
             </div>
+            <a href="home.html" class="menu-close">
+                <span>&larr;</span>
+                <span>Home</span>
+            </a>
         </header>
 
         <p class="menu-intro">
-            Champagne, Prosecco e spumanti per ogni occasione.
+            Selezione di Champagne, Prosecco e spumanti per celebrare ogni momento speciale.
+            Disponibili in bottiglia per portare a casa o da degustare in locale.
         </p>
 
         <section class="menu-section">
-            <h2 class="menu-section-title">Bollicine</h2>
+            <h2 class="menu-section-title">Prosecco</h2>
             <ul class="menu-list">
                 <li class="menu-item">
                     <div class="menu-item-header">
-                        <span class="menu-item-name">Prosecco</span>
+                        <span class="menu-item-name">Prosecco DOCG Valdobbiadene 11,5%</span>
                         <span class="menu-item-price">18,00&nbsp;&euro;</span>
                     </div>
                     <p class="menu-item-desc">
-                        Spumante italiano, fresco e leggero
+                        Prosecco frizzante e delicato
                     </p>
                 </li>
-
                 <li class="menu-item">
                     <div class="menu-item-header">
-                        <span class="menu-item-name">Champagne Brut</span>
+                        <span class="menu-item-name">Prosecco DOCG Superiore 12%</span>
+                        <span class="menu-item-price">22,00&nbsp;&euro;</span>
+                    </div>
+                    <p class="menu-item-desc">
+                        Prosecco di qualità superiore, più strutturato
+                    </p>
+                </li>
+            </ul>
+        </section>
+
+        <section class="menu-section" style="margin-top: 1.2rem;">
+            <h2 class="menu-section-title">Champagne</h2>
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Champagne Brut 12%</span>
                         <span class="menu-item-price">45,00&nbsp;&euro;</span>
                     </div>
                     <p class="menu-item-desc">
                         Champagne francese, elegante e raffinato
                     </p>
                 </li>
-
                 <li class="menu-item">
                     <div class="menu-item-header">
-                        <span class="menu-item-name">Champagne Rosé</span>
-                        <span class="menu-item-price">50,00&nbsp;&euro;</span>
+                        <span class="menu-item-name">Champagne Rosé 12,5%</span>
+                        <span class="menu-item-price">55,00&nbsp;&euro;</span>
                     </div>
                     <p class="menu-item-desc">
-                        Champagne rosé, delicato e fruttato
+                        Champagne rosé, sofisticato e aromatico
                     </p>
                 </li>
+            </ul>
+        </section>
 
+        <section class="menu-section" style="margin-top: 1.2rem;">
+            <h2 class="menu-section-title">Spumanti</h2>
+            <ul class="menu-list">
                 <li class="menu-item">
                     <div class="menu-item-header">
-                        <span class="menu-item-name">Franciacorta</span>
+                        <span class="menu-item-name">Franciacorta DOCG Lombardia 12,5%</span>
                         <span class="menu-item-price">35,00&nbsp;&euro;</span>
                     </div>
                     <p class="menu-item-desc">
-                        Spumante italiano metodo classico, complesso
+                        Spumante italiano metodo classico
                     </p>
                 </li>
-
                 <li class="menu-item">
                     <div class="menu-item-header">
-                        <span class="menu-item-name">Asti Spumante</span>
+                        <span class="menu-item-name">Asti Spumante DOCG Piemonte 7%</span>
                         <span class="menu-item-price">20,00&nbsp;&euro;</span>
                     </div>
                     <p class="menu-item-desc">
-                        Spumante dolce piemontese, aromatico
+                        Spumante dolce e aromatico
                     </p>
                 </li>
             </ul>
         </section>
 
         <p class="menu-footer">
-            La carta dei vini può variare in base alla disponibilità e alle proposte stagionali.
+            La carta delle bollicine pu&ograve; variare in base alla disponibilit&agrave;
+            e alle proposte stagionali.
         </p>
         <p class="menu-footer menu-footer-designed">
             Designed by <a href="autore.html" class="footer-author-link">MeStesso</a>
@@ -138,11 +199,6 @@
             <a href="policy.html" class="footer-author-link">Policy</a>
         </p>
     </div>
-
-    <!-- Bottone Home fisso -->
-    <a href="home.html" class="home-button">
-        <span>Home</span>
-    </a>
 
     <!-- Barra fissa in basso -->
     <div class="bottom-bar">
@@ -163,12 +219,6 @@
     <button class="scroll-top" aria-label="Torna all'inizio">
         <i class="fas fa-chevron-up"></i>
     </button>
-
-    <!-- Rettangolo fondo pagina -->
-    <div class="bottom-rectangle">
-        <div class="bottom-rectangle-left"></div>
-    </div>
-    <div class="bottom-rectangle-extended"></div>
 
     <script>
         // scroll to top button
@@ -193,79 +243,6 @@
             });
         })();
 
-        // Rettangolo fondo pagina dinamico
-        (function() {
-            const rectangle = document.querySelector('.bottom-rectangle');
-            const extendedBar = document.querySelector('.bottom-rectangle-extended');
-            if (!rectangle) return;
-
-            function updateRectanglePosition() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const documentHeight = document.documentElement.scrollHeight;
-                const viewportHeight = window.innerHeight;
-                const maxScroll = Math.max(0, documentHeight - viewportHeight);
-                
-                let bottomPosition;
-                if (maxScroll <= 0) {
-                    bottomPosition = 0;
-                } else {
-                    const scrollProgress = scrollTop / maxScroll;
-                    bottomPosition = (viewportHeight - 20) * scrollProgress;
-                }
-                
-                rectangle.style.bottom = bottomPosition + 'px';
-                
-                if (extendedBar) {
-                    extendedBar.style.bottom = (bottomPosition - 1000) + 'px';
-                }
-            }
-
-            window.addEventListener('load', updateRectanglePosition);
-            window.addEventListener('scroll', updateRectanglePosition);
-            window.addEventListener('resize', updateRectanglePosition);
-            
-            setTimeout(updateRectanglePosition, 100);
-        })();
-
-        // Animazione barra rossa durante lo scroll
-        (function() {
-            const redBar = document.querySelector('.bottom-rectangle-left');
-            if (!redBar) return;
-
-            let scrollTimeout;
-            let stopTimeout;
-            let isScrolling = false;
-            let animationStartTime = null;
-            const animationDuration = 2500;
-
-            function handleScroll() {
-                if (!isScrolling) {
-                    isScrolling = true;
-                    animationStartTime = Date.now();
-                    redBar.classList.add('scrolling');
-                }
-
-                clearTimeout(scrollTimeout);
-                clearTimeout(stopTimeout);
-
-                scrollTimeout = setTimeout(function() {
-                    isScrolling = false;
-                    
-                    const elapsed = Date.now() - animationStartTime;
-                    const remaining = animationDuration - (elapsed % animationDuration);
-                    
-                    stopTimeout = setTimeout(function() {
-                        if (!isScrolling) {
-                            redBar.classList.remove('scrolling');
-                            animationStartTime = null;
-                        }
-                    }, remaining);
-                }, 150);
-            }
-
-            window.addEventListener('scroll', handleScroll, { passive: true });
-        })();
-
         // Registrazione Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
@@ -278,6 +255,75 @@
                     });
             });
         }
+    </script>
+    
+    <script>
+        // Animazione dello sfondo vino basata sullo scroll
+        (function() {
+            const wineBg = document.querySelector('.wine-background');
+            if (!wineBg) return;
+            const wineSvg = wineBg.querySelector('svg');
+            const wavePath = wineBg.querySelector('clipPath path');
+            const animateElement = wineBg.querySelector('animate');
+            const flatWavePath = 'M64 246 L64 90 L156 90 L156 246 Z';
+            const animationValues = `M64 246 L64 90 C82 84, 100 96, 110 90 C120 84, 138 96, 156 90 L156 246 Z; M64 246 L64 90 C82 96, 100 84, 110 90 C120 96, 138 84, 156 90 L156 246 Z; M64 246 L64 90 C82 84, 100 96, 110 90 C120 84, 138 96, 156 90 L156 246 Z`;
+            if (wavePath && animateElement) { animateElement.remove(); wavePath.setAttribute('d', flatWavePath); }
+            let scrollTimeout;
+            function updateWinePosition() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const documentHeight = document.documentElement.scrollHeight;
+                const viewportHeight = window.innerHeight;
+                const maxScroll = documentHeight - viewportHeight;
+                if (maxScroll <= 0) { wineBg.style.top = '50%'; wineBg.style.transform = 'translate(-50%, -50%) scale(3.0)'; return; }
+                const scrollPercent = scrollTop / maxScroll;
+                const topPosition = 100 - (scrollPercent * 100);
+                wineBg.style.top = topPosition + 'vh';
+                wineBg.style.transform = 'translate(-50%, 0) scale(3.0)';
+            }
+            function startScrollAnimation() {
+                if (wavePath) {
+                    const existingAnimate = wavePath.querySelector('animate');
+                    if (!existingAnimate) {
+                        wavePath.removeAttribute('d');
+                        const newAnimate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+                        newAnimate.setAttribute('attributeName', 'd');
+                        newAnimate.setAttribute('dur', '2.6s');
+                        newAnimate.setAttribute('repeatCount', 'indefinite');
+                        newAnimate.setAttribute('values', animationValues);
+                        wavePath.appendChild(newAnimate);
+                    }
+                }
+                clearTimeout(scrollTimeout);
+            }
+            function stopScrollAnimation() {
+                if (wavePath) {
+                    const existingAnimate = wavePath.querySelector('animate');
+                    if (existingAnimate) {
+                        existingAnimate.remove();
+                        requestAnimationFrame(function() {
+                            requestAnimationFrame(function() {
+                                wavePath.setAttribute('d', flatWavePath);
+                            });
+                        });
+                    }
+                }
+            }
+            updateWinePosition();
+            let ticking = false;
+            window.addEventListener('scroll', function() {
+                startScrollAnimation();
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        updateWinePosition();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(stopScrollAnimation, 200);
+            }, { passive: true });
+            window.addEventListener('resize', function() { updateWinePosition(); });
+        })();
     </script>
 </body>
 </html>
