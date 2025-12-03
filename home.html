@@ -160,6 +160,19 @@
                     </div>
                 </a>
 
+                <!-- Filtro Vini -->
+                <a href="filtro.html" class="card card--food">
+                    <div class="card-inner">
+                        <div class="card-text-block">
+                            <h2 class="card-title">Filtro Vini</h2>
+                            <p class="card-subtitle">Filtra i vini per tono e regione per trovare quello perfetto.</p>
+                        </div>
+                        <div class="card-arrow">
+                            <span>&#8594;</span>
+                        </div>
+                    </div>
+                </a>
+
                 <!-- Al calice -->
                 <a href="al-calice.html" class="card card--food">
                     <div class="card-inner">
@@ -462,13 +475,22 @@
                 if (wavePath) {
                     const existingAnimate = wavePath.querySelector('animate');
                     if (existingAnimate) {
-                        // Prima ferma l'animazione prendendo lo stato corrente
+                        // Stato intermedio che rappresenta una media degli stati dell'animazione
+                        // Questo è più vicino allo stato che potrebbe avere durante l'animazione
+                        const intermediatePath = 'M64 246 L64 90 C82 90, 100 90, 110 90 C120 90, 138 90, 156 90 L156 246 Z';
+                        
+                        // Rimuove l'animazione - il browser manterrà lo stato visivo corrente
                         existingAnimate.remove();
                         
-                        // Piccolo delay per permettere alla transizione CSS di funzionare
+                        // Imposta immediatamente uno stato intermedio per evitare scatti
+                        // Questo stato è una media tra gli stati dell'animazione
+                        wavePath.setAttribute('d', intermediatePath);
+                        
+                        // Usa un piccolo delay per permettere al browser di processare il cambio
+                        // e poi transiziona al path piatto
                         requestAnimationFrame(function() {
                             requestAnimationFrame(function() {
-                                // Imposta la forma piatta con transizione smooth
+                                // Imposta la forma piatta - la transizione CSS farà il resto
                                 wavePath.setAttribute('d', flatWavePath);
                             });
                         });
@@ -494,7 +516,7 @@
                 
                 // Ferma l'animazione dopo che lo scroll si ferma (delay aumentato per transizione più smooth)
                 clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(stopScrollAnimation, 200);
+                scrollTimeout = setTimeout(stopScrollAnimation, 500);
             }, { passive: true });
             
             // Aggiorna anche quando la finestra viene ridimensionata

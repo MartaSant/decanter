@@ -320,7 +320,16 @@
                 if (wavePath) {
                     const existingAnimate = wavePath.querySelector('animate');
                     if (existingAnimate) {
+                        // Stato intermedio che rappresenta una media degli stati dell'animazione
+                        const intermediatePath = 'M64 246 L64 90 C82 90, 100 90, 110 90 C120 90, 138 90, 156 90 L156 246 Z';
+                        
+                        // Rimuove l'animazione - il browser manterrà lo stato visivo corrente
                         existingAnimate.remove();
+                        
+                        // Imposta immediatamente uno stato intermedio per evitare scatti
+                        wavePath.setAttribute('d', intermediatePath);
+                        
+                        // Usa un piccolo delay per permettere al browser di processare il cambio
                         requestAnimationFrame(function() {
                             requestAnimationFrame(function() {
                                 wavePath.setAttribute('d', flatWavePath);
@@ -341,7 +350,7 @@
                     ticking = true;
                 }
                 clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(stopScrollAnimation, 200);
+                scrollTimeout = setTimeout(stopScrollAnimation, 500);
             }, { passive: true });
             window.addEventListener('resize', function() { updateWinePosition(); });
         })();
