@@ -2,12 +2,12 @@
   "name": "Decanter Wine & More",
   "short_name": "Decanter",
   "description": "Vineria a Napoli. Vini in bottiglia, calici e taglieri. Via Carlo De Cesare 46, 80132 Napoli (NA)",
-  "start_url": "/index.html",
+  "start_url": "/decanter/",
   "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#8B4513",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "/decanter/",
   "lang": "it",
   "icons": [
     {
